@@ -1,6 +1,5 @@
 import React, { useContext } from 'react';
 import { ListGroup, ListGroupItem, Button } from 'reactstrap';
-import axios from 'axios';
 import UsersContext from '../context';
 
 const UsersList = () => {

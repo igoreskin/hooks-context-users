@@ -1,4 +1,4 @@
-import React, { useContext, useReducer, useState, useEffect } from 'react';
+import React, { useContext, useReducer, useEffect } from 'react';
 import axios from 'axios';
 import UsersContext from './context';
 import usersReducer from './reducer';
@@ -10,13 +10,20 @@ const App = () => {
   const initialState = useContext(UsersContext);
   const [state, dispatch] = useReducer(usersReducer, initialState);
 
-  console.log("INITIAL STATE: ", initialState)
+  useEffect(() => {
+    getData()
+  }, [])
 
-  const allUsers = initialState;
+  const getData = async() => {
+    const result = await axios.get('/users', {
+      params: {
+        limit: 1000
+      }
+    });
+    console.log("RESULT.DATA: ", result.data.data);
+    dispatch({ type: "GET_USERS", payload: result.data.data });
+  }
 
-  // useEffect(() => {
-  //   dispatch({ type: "GET_USERS", payload: allUsers })
-  // }, [allUsers])
 
   return (
     <UsersContext.Provider value={{ state, dispatch }}>
